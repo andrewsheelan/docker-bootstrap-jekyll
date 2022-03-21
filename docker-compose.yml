@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  web:
+    build: .
+    volumes:
+      - .:/app
+      - ./tmp/bundle:/bundle
+    command: bash -c "bundle exec jekyll serve --host 0.0.0.0"
+    ports:
+      - "4000:4000"
+    environment:
+      BUNDLE_PATH:  /bundle

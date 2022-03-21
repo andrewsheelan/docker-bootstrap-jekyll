@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# clone the repo and run:
+# ./boostrap
+# This is a one time only run file
+
+# Force a build
+touch Gemfile.lock && docker-compose build
+
+# Install jekyll and create new project
+docker-compose run --no-deps web bundle install && bundle add webrick
+docker-compose run --no-deps web jekyll new . --force
+docker-compose run --no-deps web bundle add webrick
+
+echo "exclude: [tmp]" >> _config.yml
+# Remove this file
+rm bootstrap
+
+# Start the application
+docker-compose up
